@@ -2,10 +2,8 @@ import './Footer.css'
 
 const Footer = () => {
   const socialLinks = [
-    { name: 'GitHub', icon: 'fa-github', url: 'https://github.com' },
-    { name: 'LinkedIn', icon: 'fa-linkedin', url: 'https://linkedin.com' },
-    { name: 'Twitter', icon: 'fa-twitter', url: 'https://twitter.com' },
-    { name: 'Facebook', icon: 'fa-facebook', url: 'https://facebook.com' },
+    { name: 'GitHub', icon: 'fa-github', url: 'https://github.com/razaizim1' },
+    { name: 'LinkedIn', icon: 'fa-linkedin', url: 'https://www.linkedin.com/in/razai-zim-475701165/' },
   ]
 
   return (
@@ -13,7 +11,7 @@ const Footer = () => {
       <div className="container">
         <div className="footer-content">
           <div className="footer-section">
-            <h3 className="footer-logo">JD<span>Dev</span></h3>
+            <h3 className="footer-logo">Zim<span>Dev</span></h3>
             <p className="footer-text">
               Crafting digital experiences with passion and precision.
             </p>
@@ -59,22 +57,18 @@ const Footer = () => {
             <ul className="footer-contact">
               <li>
                 <i className="fa fa-envelope"></i>
-                <span>john@example.com</span>
+                <span>razai.zim1@gmail.com</span>
               </li>
               <li>
                 <i className="fa fa-phone"></i>
-                <span>+1 234 567 890</span>
-              </li>
-              <li>
-                <i className="fa fa-whatsapp"></i>
-                <span>+1 234 567 890</span>
+                <span>+88017 9294 5956</span>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} JDDev. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} ZimDev. All rights reserved.</p>
         </div>
       </div>
     </footer>

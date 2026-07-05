@@ -35,7 +35,7 @@ const Navbar = () => {
       <div className="container">
         <div className="navbar-content">
           <Link to="/" className="navbar-logo">
-            <span className="logo-text">JD</span>
+            <span className="logo-text">Zim</span>
             <span className="logo-sub">Dev</span>
           </Link>
 
@@ -50,11 +50,11 @@ const Navbar = () => {
                 </button>
               </li>
             ))}
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to="/admin" className="btn btn-secondary admin-btn">
                 <i className="fa fa-cog"></i> Admin
               </Link>
-            </li>
+            </li> */}
           </ul>
 
           <button
