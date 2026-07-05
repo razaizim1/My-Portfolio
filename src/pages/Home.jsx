@@ -7,71 +7,265 @@ import profilePhoto from '../assets/profile.png'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// Custom SplitText function (free alternative)
+const splitText = (element) => {
+  const text = element.textContent
+  element.innerHTML = ''
+  
+  const words = text.split(' ')
+  words.forEach((word, i) => {
+    const wordSpan = document.createElement('span')
+    wordSpan.className = 'word'
+    wordSpan.style.display = 'inline-block'
+    
+    word.split('').forEach((char, j) => {
+      const charSpan = document.createElement('span')
+      charSpan.className = 'char'
+      charSpan.textContent = char
+      charSpan.style.display = 'inline-block'
+      wordSpan.appendChild(charSpan)
+    })
+    
+    element.appendChild(wordSpan)
+    if (i < words.length - 1) {
+      element.appendChild(document.createTextNode(' '))
+    }
+  })
+  
+  return element
+}
+
 const Home = () => {
   const heroRef = useRef(null)
   const aboutRef = useRef(null)
   const skillsRef = useRef(null)
   const projectsRef = useRef(null)
+  const themesRef = useRef(null)
   const contactRef = useRef(null)
+  const expertiseRef = useRef(null)
+  const timelineRef = useRef(null)
 
   useEffect(() => {
+    let scrollTriggers = []
+    
     try {
-      const heroContent = heroRef.current.querySelectorAll('.hero-content > *')
-      gsap.from(heroContent, {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out'
+      // Smooth scroll setup
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault()
+          const target = document.querySelector(this.getAttribute('href'))
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            })
+          }
+        })
       })
 
-      gsap.from('.about-content', {
-        scrollTrigger: {
+      // Hero animations
+      if (heroRef.current) {
+        const heroGreeting = heroRef.current.querySelector('.hero-greeting')
+        const heroName = heroRef.current.querySelector('.hero-name')
+        const heroTitle = heroRef.current.querySelector('.hero-title')
+        const heroDescription = heroRef.current.querySelector('.hero-description')
+        const heroButtons = heroRef.current.querySelector('.hero-buttons')
+        const heroSocial = heroRef.current.querySelector('.hero-social')
+        const heroImage = heroRef.current.querySelector('.hero-image')
+
+        // Set initial states explicitly
+        gsap.set(heroGreeting, { opacity: 0, y: 30 })
+        gsap.set(heroTitle, { opacity: 0, y: 30 })
+        gsap.set(heroDescription, { opacity: 0, y: 30 })
+        gsap.set(heroButtons?.children || [], { opacity: 0, y: 30 })
+        gsap.set(heroSocial?.children || [], { opacity: 0, y: 30 })
+        gsap.set(heroImage, { opacity: 0, x: 100 })
+
+        // Split text for hero name
+        let heroChars = []
+        if (heroName) {
+          splitText(heroName)
+          heroChars = heroName.querySelectorAll('.char')
+          gsap.set(heroChars, { opacity: 0, y: 100 })
+        }
+        
+        gsap.timeline()
+          .to(heroGreeting, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' })
+          .to(heroChars, { 
+            y: 0, 
+            opacity: 1, 
+            duration: 0.8, 
+            stagger: 0.05, 
+            ease: 'power3.out' 
+          }, '-=0.4')
+          .to(heroTitle, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }, '-=0.4')
+          .to(heroDescription, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }, '-=0.4')
+          .to(heroButtons?.children || [], { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out' }, '-=0.4')
+          .to(heroSocial?.children || [], { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out' }, '-=0.4')
+          .to(heroImage, { x: 0, opacity: 1, duration: 1, ease: 'power3.out' }, '-=0.8')
+      }
+
+      // About section
+      if (aboutRef.current) {
+        const aboutElements = aboutRef.current.querySelectorAll('.about-content > *')
+        gsap.set(aboutElements, { opacity: 0, y: 50 })
+        
+        const st1 = ScrollTrigger.create({
           trigger: aboutRef.current,
-          start: 'top 80%'
-        },
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out'
-      })
+          start: 'top 80%',
+          onEnter: () => {
+            gsap.to(aboutElements, {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.2,
+              ease: 'power3.out'
+            })
+          },
+          once: true
+        })
+        scrollTriggers.push(st1)
+      }
 
-      gsap.from('.skill-card', {
-        scrollTrigger: {
+      // Expertise section
+      if (expertiseRef.current) {
+        const expertiseCards = expertiseRef.current.querySelectorAll('.card')
+        gsap.set(expertiseCards, { opacity: 0, y: 60 })
+        
+        const st2 = ScrollTrigger.create({
+          trigger: expertiseRef.current,
+          start: 'top 80%',
+          onEnter: () => {
+            gsap.to(expertiseCards, {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.2,
+              ease: 'power3.out'
+            })
+          },
+          once: true
+        })
+        scrollTriggers.push(st2)
+      }
+
+      // Skills section
+      if (skillsRef.current) {
+        const skillCards = skillsRef.current.querySelectorAll('.skill-card')
+        gsap.set(skillCards, { opacity: 0, y: 50 })
+        
+        const st3 = ScrollTrigger.create({
           trigger: skillsRef.current,
-          start: 'top 80%'
-        },
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power3.out'
-      })
+          start: 'top 80%',
+          onEnter: () => {
+            gsap.to(skillCards, {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.1,
+              ease: 'power3.out'
+            })
+          },
+          once: true
+        })
+        scrollTriggers.push(st3)
+      }
 
-      gsap.from('.project-card', {
-        scrollTrigger: {
+      // Timeline items
+      if (timelineRef.current) {
+        const timelineItems = timelineRef.current.querySelectorAll('.timeline-item')
+        gsap.set(timelineItems, { opacity: 0, x: -50 })
+        
+        const st4 = ScrollTrigger.create({
+          trigger: timelineRef.current,
+          start: 'top 80%',
+          onEnter: () => {
+            gsap.to(timelineItems, {
+              x: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.2,
+              ease: 'power3.out'
+            })
+          },
+          once: true
+        })
+        scrollTriggers.push(st4)
+      }
+
+      // Projects section
+      if (projectsRef.current) {
+        const projectCards = projectsRef.current.querySelectorAll('.project-card')
+        gsap.set(projectCards, { opacity: 0, y: 60 })
+        
+        const st5 = ScrollTrigger.create({
           trigger: projectsRef.current,
-          start: 'top 80%'
-        },
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out'
-      })
+          start: 'top 80%',
+          onEnter: () => {
+            gsap.to(projectCards, {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.15,
+              ease: 'power3.out'
+            })
+          },
+          once: true
+        })
+        scrollTriggers.push(st5)
+      }
 
-      gsap.from('.contact-content', {
-        scrollTrigger: {
+      // Contact section
+      if (contactRef.current) {
+        const contactElements = contactRef.current.querySelectorAll('.contact-content > *')
+        gsap.set(contactElements, { opacity: 0, y: 50 })
+        
+        const st6 = ScrollTrigger.create({
           trigger: contactRef.current,
-          start: 'top 80%'
-        },
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out'
-      })
+          start: 'top 80%',
+          onEnter: () => {
+            gsap.to(contactElements, {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.2,
+              ease: 'power3.out'
+            })
+          },
+          once: true
+        })
+        scrollTriggers.push(st6)
+      }
+
+      // Themes section
+      if (themesRef.current) {
+        const themeCards = themesRef.current.querySelectorAll('.project-card')
+        gsap.set(themeCards, { opacity: 0, y: 60 })
+        
+        const st7 = ScrollTrigger.create({
+          trigger: themesRef.current,
+          start: 'top 80%',
+          onEnter: () => {
+            gsap.to(themeCards, {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.15,
+              ease: 'power3.out'
+            })
+          },
+          once: true
+        })
+        scrollTriggers.push(st7)
+      }
     } catch (error) {
       console.log('Animations disabled:', error)
+    }
+
+    // Cleanup function
+    return () => {
+      scrollTriggers.forEach(st => st.kill())
+      ScrollTrigger.getAll().forEach(st => st.kill())
     }
   }, [])
 
@@ -318,7 +512,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="section expertise-section">
+      <section className="section expertise-section" ref={expertiseRef}>
         <div className="container">
           <h2 className="section-title">Expertise Highlights</h2>
           <p className="section-subtitle">What I specialize in</p>
@@ -384,7 +578,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="section education-experience">
+      <section className="section education-experience" ref={timelineRef}>
         <div className="container">
           <div className="edu-exp-grid">
             <div className="edu-exp-section">
@@ -445,7 +639,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="section projects">
+      <section className="section projects" ref={themesRef}>
         <div className="container">
           <h2 className="section-title">ThemeForest Themes</h2>
           <p className="section-subtitle">My premium WordPress themes</p>

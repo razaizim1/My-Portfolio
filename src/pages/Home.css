@@ -1,5 +1,11 @@
 .home {
   width: 100%;
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 .hero {
