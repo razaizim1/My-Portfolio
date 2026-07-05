@@ -34,6 +34,16 @@ body {
   overflow-x: hidden;
 }
 
+/* Ensure all elements are visible by default */
+.hero-content > *,
+.about-content,
+.skill-card,
+.project-card,
+.contact-content {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 html {
   scroll-behavior: smooth;
 }
