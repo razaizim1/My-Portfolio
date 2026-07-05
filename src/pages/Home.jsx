@@ -157,7 +157,7 @@ const Home = () => {
   ]
 
   const education = [
-    { degree: 'Full Stack Web Development', school: 'Tech Institute', year: '2022 - 2023' },
+    { degree: 'Full Stack Web Development', school: 'Tech Institute', year: '2018 - 2020' },
     { degree: 'WordPress Theme Development', school: 'ThemeForest Author Program', year: '2021 - Present' },
   ]
 
